@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -20,29 +20,35 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth.views import PasswordResetCompleteView
-from .models import recipe
+from .models import Recipe
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from recipe import forms
 
 
 def index(request):
-    return render(request, 'foodies/index.html')
+    return render(request, 'index.html')
 
 
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+def register(request: HttpRequest) -> HttpResponse:
+    form = forms.RegistrationForm()
+
+    if request.method == "POST":
+        form = forms.RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
+            user = form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
             login(request, user)
-            return redirect('index')
-    else:
-        form = UserCreationForm()
-        context = {'form': form}
-        return render(request, 'register.html', context)
+            return redirect("home")
+
+    context = {
+        "form": form,
+
+    }
+
+    return render(request, "register.html", context)
 
 
 def login_view(request):
@@ -103,11 +109,16 @@ def profile(request):
 
 
 def recipe(request):
-    return render(request, 'recipe.html')
+    recipes = Recipe.objects.all()
+    context = {'recipe': recipes}
+    return render(request, 'recipe.html', context)
 
 
 def recipe_detail(request, recipe_id):
-    return render(request, 'recipe_detail.html')
+    recipe = Recipe.objects.get(id=recipe_id)
+    context = {'recipe': recipe}
+
+    return render(request, 'recipe_detail.html', context)
 
 
 def recipe_create(request):

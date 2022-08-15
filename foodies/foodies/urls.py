@@ -39,7 +39,8 @@ urlpatterns = [
     path('logout/', foodies_views.logout_view, name='logout'),
     path('change_password/', foodies_views.change_password, name='change_password'),
     path('reset_password/', foodies_views.reset_password, name='reset_password'),
-    path('recipe/<int:pk>/', foodies_views.recipe_detail, name='recipe_detail'),
+    path('recipe/<int:recipe_id>/',
+         foodies_views.recipe_detail, name='recipe_detail'),
     path('profile/', foodies_views.profile, name='profile'),
     path('category/<int:pk>/', foodies_views.category_detail, name='category_detail'),
     path('search/', foodies_views.search, name='search'),
@@ -65,6 +66,7 @@ urlpatterns = [
     path('category/<int:pk>/delete/',
          foodies_views.category_delete, name='category_delete'),
     path('category/create/', foodies_views.category_create, name='category_create'),
+    path('recipe/', foodies_views.recipe, name='recipe'),
 
 
 

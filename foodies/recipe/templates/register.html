@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,33 +14,28 @@
 <div class="form_wrapper">
     <div class="form_container">
       <div class="title_container">
-        <h2>Responsive Registration Form</h2>
+        <h2>Registration Form</h2>
       </div>
         <div class="form_container">
-            <form action="register.php" method="post">
-                <div class="form_group">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name" class="form_control">
-                    {{form}}
-                    {{csrf}}
+          <div class="container py-5">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="mb-0">Register</h3>
+                  </div>
+                  <div class="card-body">
+                    <form method="POST" action="{% url 'register' %}">
+                      {{ form.as_p }}
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-lg btn-block btn-primary">Register</button>
+                    </form>
+                  </div>
                 </div>
-              <div class="input_field checkbox_option">
-                  <input type="checkbox" id="cb1">
-                  <label for="cb1">I agree with terms and conditions</label>
               </div>
-              <div class="input_field checkbox_option">
-                  <input type="checkbox" id="cb2">
-                  <label for="cb2">I want to receive the newsletter</label>
-              </div>
-            <input class="button" type="submit" value="Register" />
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p>
-</body>
-</html>
 
 
 
+              
+              
+            </div>

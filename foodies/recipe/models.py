@@ -1,24 +1,19 @@
 from audioop import reverse
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.conf import settings
+from django.contrib.auth.models import User
 
 
-class user(AbstractUser):
-    pass
-
-
-class category(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
 
-class ingredient(models.Model):
+class Ingredient(models.Model):
     name = models.CharField(max_length=50)
     weight = models.FloatField(default=0)
-    category = models.ForeignKey(category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -27,13 +22,13 @@ class ingredient(models.Model):
         return reverse('ingredient_detail', args=[str(self.id)])
 
 
-class recipe(models.Model):
+class Recipe(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
-    ingredients = models.ManyToManyField(ingredient)
+    ingredients = models.ManyToManyField(Ingredient)
     serving_size = models.IntegerField(default=0)
-    category = models.ForeignKey(category, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,
                              on_delete=models.CASCADE)
 
     def __str__(self):
@@ -67,9 +62,9 @@ class recipe(models.Model):
         return ', '.join([str(ingredient.category.id) + ' ' + str(ingredient.weight) + ' ' + ingredient.name + ' ' + ingredient.category.name for ingredient in self.ingredients.all()])
 
 
-class userProfile(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+        User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     email = models.EmailField(blank=True)
