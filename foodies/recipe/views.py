@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -40,7 +41,8 @@ def register(request):
             return redirect('index')
     else:
         form = UserCreationForm()
-    return render(request, 'foodies/register.html', {'form': form})
+        context = {'form': form}
+        return render(request, 'register.html', context)
 
 
 def login_view(request):
@@ -54,10 +56,10 @@ def login_view(request):
                 login(request, user)
                 return redirect('index')
             else:
-                return render(request, 'foodies/login.html', {'form': form, 'error': 'Invalid username or password'})
+                return render(request, 'login.html', {'form': form, 'error': 'Invalid username or password'})
     else:
         form = AuthenticationForm()
-    return render(request, 'foodies/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 
 def logout_view(request):
@@ -74,7 +76,7 @@ def change_password(request):
             return redirect('index')
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'foodies/change_password.html', {'form': form})
+    return render(request, 'change_password.html', {'form': form})
 
 
 def reset_password(request):
@@ -85,100 +87,100 @@ def reset_password(request):
             return redirect('index')
     else:
         form = PasswordResetForm()
-    return render(request, 'foodies/reset_password.html', {'form': form})
+    return render(request, 'reset_password.html', {'form': form})
 
 
 def reset_password_confirm(request, uidb64=None, token=None):
-    return PasswordResetConfirmView.as_view(template_name='foodies/reset_password_confirm.html')(request, uidb64=uidb64, token=token)
+    return PasswordResetConfirmView.as_view(template_name='reset_password_confirm.html')(request, uidb64=uidb64, token=token)
 
 
 def reset_password_complete(request):
-    return PasswordResetCompleteView.as_view(template_name='foodies/reset_password_complete.html')(request)
+    return PasswordResetCompleteView.as_view(template_name='reset_password_complete.html')(request)
 
 
 def profile(request):
-    return render(request, 'foodies/profile.html')
+    return render(request, 'profile.html')
 
 
 def recipe(request):
-    return render(request, 'foodies/recipe.html')
+    return render(request, 'recipe.html')
 
 
 def recipe_detail(request, recipe_id):
-    return render(request, 'foodies/recipe_detail.html')
+    return render(request, 'recipe_detail.html')
 
 
 def recipe_create(request):
-    return render(request, 'foodies/recipe_create.html')
+    return render(request, 'recipe_create.html')
 
 
 def recipe_edit(request, recipe_id):
-    return render(request, 'foodies/recipe_edit.html')
+    return render(request, 'recipe_edit.html')
 
 
 def recipe_delete(request, recipe_id):
-    return render(request, 'foodies/recipe_delete.html')
+    return render(request, 'recipe_delete.html')
 
 
 def ingredient(request):
-    return render(request, 'foodies/ingredient.html')
+    return render(request, 'ingredient.html')
 
 
 def ingredient_detail(request, ingredient_id):
-    return render(request, 'foodies/ingredient_detail.html')
+    return render(request, 'ingredient_detail.html')
 
 
 def ingredient_create(request):
-    return render(request, 'foodies/ingredient_create.html')
+    return render(request, 'ingredient_create.html')
 
 
 def ingredient_edit(request, ingredient_id):
-    return render(request, 'foodies/ingredient_edit.html')
+    return render(request, 'ingredient_edit.html')
 
 
 def ingredient_delete(request, ingredient_id):
-    return render(request, 'foodies/ingredient_delete.html')
+    return render(request, 'ingredient_delete.html')
 
 
 def category(request):
-    return render(request, 'foodies/category.html')
+    return render(request, 'category.html')
 
 
 def category_detail(request, category_id):
-    return render(request, 'foodies/category_detail.html')
+    return render(request, 'category_detail.html')
 
 
 def category_create(request):
-    return render(request, 'foodies/category_create.html')
+    return render(request, 'category_create.html')
 
 
 def category_edit(request, category_id):
-    return render(request, 'foodies/category_edit.html')
+    return render(request, 'category_edit.html')
 
 
 def category_delete(request, category_id):
-    return render(request, 'foodies/category_delete.html')
+    return render(request, 'category_delete.html')
 
 
 def search(request):
-    return render(request, 'foodies/search.html')
+    return render(request, 'search.html')
 
 
 def search_result(request):
-    return render(request, 'foodies/search_result.html')
+    return render(request, 'search_result.html')
 
 
 def search_result_detail(request, recipe_id):
-    return render(request, 'foodies/search_result_detail.html')
+    return render(request, 'search_result_detail.html')
 
 
 def search_result_create(request):
-    return render(request, 'foodies/search_result_create.html')
+    return render(request, 'search_result_create.html')
 
 
 def search_result_edit(request, recipe_id):
-    return render(request, 'foodies/search_result_edit.html')
+    return render(request, 'search_result_edit.html')
 
 
 def search_result_delete(request, recipe_id):
-    return render(request, 'foodies/search_result_delete.html')
+    return render(request, 'search_result_delete.html')

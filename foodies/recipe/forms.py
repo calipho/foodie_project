@@ -65,12 +65,7 @@ class UserRegistrationForm(UserCreationForm):
         password = self.cleaned_data['password1']
         user.set_password(password)
         user.save()
-
-        context = {
-            'user': user,
-            'password': password,
-        }
-        return render(request, 'register.html', context)
+        return user
 
 
 class UserLoginForm(forms.Form):
