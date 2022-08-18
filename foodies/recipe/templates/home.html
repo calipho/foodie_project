@@ -3,9 +3,76 @@
 
 {% block content %}
 
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1> Welcome Back {{user.username}} ! </h1>
+            </div>
+        </div>
+        <style>
+            body {font-family: "Times New Roman", Georgia, Serif;}
+            h1, h2, h3, h4, h5, h6 {
+              font-family: "Playfair Display";
+              letter-spacing: 5px;
+            }
+            </style>
+            </head>
+            <body>
+            
+            <!-- Navbar (sit on top) -->
+           
+            
+            <!-- Header -->
+           
+              <!-- Menu Section -->
+              <div class="w3-row w3-padding-64" id="menu">
+                <div class="w3-col l6 w3-padding-large">
+                  <h1 class="w3-center">This place is meant to amuse foodies tummies by creating the most innovative Recipe's </h1><br><br><br><br><br><br><br><br>
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3478.6667123156326!2d47.925336914696075!3d29.321450659317954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf9baa362ad01f%3A0x2b2c93ed2b6f509b!2sShaikh%20AlKatem%20Restaurant!5e0!3m2!1sen!2skw!4v1660824584589!5m2!1sen!2skw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  
+                </div>
+                
+                <div class="w3-col l6 w3-padding-large">
+                  <img src="/w3images/tablesetting.jpg" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+                </div>
+              </div>
+            
+              <hr>
+            
+              <!-- Contact Section -->
+              <div class="w3-container w3-padding-64" id="contact">
+                <h1>Contact</h1><br>
+                <p></p>
+                <p class="w3-text-blue-grey w3-large"><b>Shuwaikh Indutsrial</b></p>
+                <p>Don't know how to cook those amazing recipes ? You can also order or contact us by phone 66626364 or email catering@alkatem.com, or you can send us a book a table here:</p>
+                <form action="/action_page.php" target="_blank">
+                  <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
+                  <p><input class="w3-input w3-padding-16" type="number" placeholder="How many people" required name="People"></p>
+                  <p><input class="w3-input w3-padding-16" type="datetime-local" placeholder="Date and time" required name="date" value="2020-11-16T20:00"></p>
+                  <p><input class="w3-input w3-padding-16" type="text" placeholder="Message \ Special requirements" required name="Message"></p>
+                  <p><button class="w3-button w3-light-grey w3-section" type="submit">SEND MESSAGE</button></p>
+                </form>
+              </div>
+              
+            <!-- End page content -->
+            </div>
+            
+            <!-- Footer -->
+            <footer class="w3-center w3-light-grey w3-padding-32">
+              <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+            </footer>
+            
+            </body>
 
-Welcome Back {{user.first_name}} {{user.last_name}} !
-{% csrf_token %}
+
+                   
+                    {% csrf_token %}
+                </p>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock content %}
 
