@@ -8,22 +8,19 @@
         <div class="row"> 
             {% for recipes in recipe %}
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="mb-0">{{recipes.name}}</h3>
-                    </div>
+                <div class="card" style="background-color: #363539; border-radius: 100px 100px 0px 0px; border: none;" >
+                    {% if recipes.image %}
+                        <img class="card-img-top" src="{{ recipes.image.url }}" width="25%" height="25%">
+                    {% endif %}
                     <div class="card-body">
-                        {{recipes.description}}
-                        {{recipes.ingredients}}
-                        {{recipes.instructions}}
-                        {% if recipe.image %}
-                            <img src="{{ recipe.image.url }}">
-                            /Users/coded/Desktop/HTML/foodie_project/foodies/foodies/images/Screen_Shot_2022-08-15_at_2.58.07_PM.png
-                        {% endif %}
-                        {{recipes.created_at}}
-                        {{recipes.updated_at}}
-                        {{recipes.user}}
-                    </div>
+                        <h5 class="card-title" style="color:#f9b716">{{recipes.name}}</h5>
+                        <p class="card-text" style="color:white">Description: {{recipes.description}}</p>
+                        <p class="card-text" style="color:white">Instructions: {{recipes.instructions}}</p>
+                        <p class="card-text" style="color:white">Created at: {{recipes.created_at}}</p>
+                        <p class="card-text" style="color:white">Updated at: {{recipes.updated_at}}</p>
+                        <p class="card-text" style="color:white">Created by: {{recipes.user}}</p>
+                      </div>
+                    
                 </div>
             </div>
             {% endfor %}
