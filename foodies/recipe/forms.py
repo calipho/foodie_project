@@ -4,13 +4,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from recipe.models import User, Category, Ingredient, Recipe, UserProfile
+from django.contrib.auth import authenticate, login, logout
 
 
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ['name', 'description',
-                  'ingredients', 'serving_size', 'category']
+                  'ingredients', 'serving_size', 'category', 'image']
         widgets = {
             'ingredients': forms.CheckboxSelectMultiple(),
         }
@@ -50,7 +51,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["username", "password"]
+        fields = ["username", "password", "email", "first_name", "last_name"]
 
     def clean_username(self):
         username = self.cleaned_data["username"]
@@ -76,22 +77,6 @@ class RegistrationForm(forms.ModelForm):
 class UserLoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
-
-    class Meta:
-        fields = ['username', 'password']
-
-    def clean(self):
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        if user is None:
-            raise forms.ValidationError('Invalid username or password')
-        return self.cleaned_data
-
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-        self.fields['username'].label = 'Username'
-        self.fields['password'].label = 'Password'
 
 
 class UserEditForm(forms.ModelForm):
@@ -132,3 +117,17 @@ class UserEditForm(forms.ModelForm):
             self.fields['first_name'].label = 'First Name'
             self.fields['last_name'].label = 'Last Name'
             self.fields['email'].label = 'Email'
+
+
+class homeForm(forms.Form):
+    search = forms.CharField(max_length=100, required=False)
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(), required=False)
+    ingredient = forms.ModelChoiceField(
+        queryset=Ingredient.objects.all(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(homeForm, self).__init__(*args, **kwargs)
+        self.fields['search'].label = 'Search'
+        self.fields['category'].label = 'Category'
+        self.fields['ingredient'].label = 'Ingredient'

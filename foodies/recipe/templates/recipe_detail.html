@@ -1,3 +1,9 @@
+{% extends 'base.html' %}
+{% block title %} Recipe Detail {% endblock title %}
+
+{% block content %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +17,7 @@
     {{recipe.description}}
     {{recipe.ingredients}}
     {{recipe.instructions}}
-    {{recipe.image}}
+    {{recipe.image.file}}
     {{recipe.created_at}}
     {{recipe.updated_at}}
     {{recipe.user}}
@@ -25,3 +31,5 @@
     </form>
 </body>
 </html>
+
+{% endblock content %}

@@ -60,7 +60,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect('home')
             else:
                 return render(request, 'login.html', {'form': form, 'error': 'Invalid username or password'})
     else:
@@ -70,7 +70,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('index')
+    return redirect('home')
 
 
 def change_password(request):
@@ -122,7 +122,16 @@ def recipe_detail(request, recipe_id):
 
 
 def recipe_create(request):
-    return render(request, 'recipe_create.html')
+    form = forms.RecipeForm()
+    if request.method == 'POST':
+        form = forms.RecipeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('recipe')
+    context = {
+        'form': form,
+    }
+    return render(request, 'recipe_create.html', context)
 
 
 def recipe_edit(request, recipe_id):
@@ -138,11 +147,23 @@ def ingredient(request):
 
 
 def ingredient_detail(request, ingredient_id):
-    return render(request, 'ingredient_detail.html')
+    ingredient = Recipe.objects.get(id=ingredient_id)
+    context = {'ingredient': ingredient}
+
+    return render(request, 'ingredient_detail.html', context)
 
 
 def ingredient_create(request):
-    return render(request, 'ingredient_create.html')
+    form = forms.IngredientForm()
+    if request.method == 'POST':
+        form = forms.IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ingredient')
+    context = {
+        'form': form,
+    }
+    return render(request, 'ingredient_create.html', context)
 
 
 def ingredient_edit(request, ingredient_id):
@@ -158,11 +179,23 @@ def category(request):
 
 
 def category_detail(request, category_id):
-    return render(request, 'category_detail.html')
+    category = Recipe.objects.get(id=category_id)
+    context = {'category': category}
+
+    return render(request, 'category_detail.html', context)
 
 
 def category_create(request):
-    return render(request, 'category_create.html')
+    form = forms.CategoryForm()
+    if request.method == 'POST':
+        form = forms.CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('category')
+    context = {
+        'form': form,
+    }
+    return render(request, 'category_create.html', context)
 
 
 def category_edit(request, category_id):
@@ -174,15 +207,20 @@ def category_delete(request, category_id):
 
 
 def search(request):
+
     return render(request, 'search.html')
 
 
 def search_result(request):
+
     return render(request, 'search_result.html')
 
 
 def search_result_detail(request, recipe_id):
-    return render(request, 'search_result_detail.html')
+    recipe = Recipe.objects.get(id=recipe_id)
+    context = {'recipe': recipe}
+
+    return render(request, 'search_result_detail.html', context)
 
 
 def search_result_create(request):
@@ -195,3 +233,16 @@ def search_result_edit(request, recipe_id):
 
 def search_result_delete(request, recipe_id):
     return render(request, 'search_result_delete.html')
+
+
+def home(request):
+    return render(request, 'home.html')
+
+
+def image_upload(request):
+
+    return render(request, 'image_upload.html')
+
+
+def image_view(request):
+    return render(request, 'image_view.html')

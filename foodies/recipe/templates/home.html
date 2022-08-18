@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %}
+
+{% block content %}
+
+
+Welcome Back {{user.first_name}} {{user.last_name}} !
+{% csrf_token %}
+
+{% endblock content %}
+

@@ -34,6 +34,7 @@ from django.urls import path
 from recipe import views as foodies_views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/', foodies_views.home, name='home'),
     path('register/', foodies_views.register, name='register'),
     path('login/', foodies_views.login_view, name='login'),
     path('logout/', foodies_views.logout_view, name='logout'),
@@ -67,6 +68,11 @@ urlpatterns = [
          foodies_views.category_delete, name='category_delete'),
     path('category/create/', foodies_views.category_create, name='category_create'),
     path('recipe/', foodies_views.recipe, name='recipe'),
+    path('recipe/<int:pk>/', foodies_views.recipe_detail, name='recipe_detail'),
+
+
+    path('recipe/<int:pk>/upload_image/',
+         foodies_views.image_upload, name='upload_image'),
 
 
 
